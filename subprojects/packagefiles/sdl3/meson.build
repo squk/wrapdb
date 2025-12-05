@@ -281,38 +281,77 @@ elif host_machine.system() == 'windows'
   sdl_deps += cc.find_library('imm32')
   sdl_deps += cc.find_library('setupapi')
   sdl_deps += cc.find_library('winmm')
-elif host_machine.subsystem() == 'macos'
+elif host_machine.system() == 'darwin'
   cdata.set('SDL_PLATFORM_APPLE', 1)
+
+  # Threading
   cdata.set('SDL_THREAD_PTHREAD', 1)
   cdata.set('SDL_THREAD_PTHREAD_RECURSIVE_MUTEX', 1)
+
+  # System
   cdata.set('SDL_LOADSO_DLOPEN', 1)
   cdata.set('SDL_PROCESS_POSIX', 1)
   cdata.set('SDL_FILESYSTEM_COCOA', 1)
   cdata.set('SDL_FSOPS_POSIX', 1)
-  cdata.set('SDL_SENSOR_DUMMY', 1)
-  cdata.set('SDL_POWER_MACOSX', 1)
-  cdata.set('SDL_VIDEO_RENDER_GPU', 1)
-  cdata.set('SDL_GPU_VULKAN', 1)
-  cdata.set('SDL_GPU_METAL', 1)
-  cdata.set('SDL_VIDEO_VULKAN', 1)
-  cdata.set('SDL_VIDEO_METAL', 1)
-  cdata.set('SDL_VIDEO_RENDER_VULKAN', 1)
-  cdata.set('SDL_XINPUT', 1)
+  cdata.set('SDL_TIME_UNIX', 1)
   cdata.set('SDL_TIMER_UNIX', 1)
+
+  # Audio
+  cdata.set('SDL_AUDIO_DRIVER_COREAUDIO', 1)
+
+  # Video / Render
+  cdata.set('SDL_VIDEO_DRIVER_COCOA', 1)
+  cdata.set('SDL_VIDEO_RENDER_GPU', 1)
+  cdata.set('SDL_VIDEO_RENDER_METAL', 1)
+  cdata.set('SDL_VIDEO_RENDER_VULKAN', 1)
+
+  # Metal / Vulkan / OpenGL (Context Support)
+  cdata.set('SDL_VIDEO_METAL', 1)
+  cdata.set('SDL_VIDEO_VULKAN', 1)
+  cdata.set('SDL_VIDEO_OPENGL', 1)
+  cdata.set('SDL_VIDEO_OPENGL_CGL', 1)
+  cdata.set('SDL_GPU_METAL', 1)
+  cdata.set('SDL_GPU_VULKAN', 1)
+
+  # Inputs
+  cdata.set('SDL_JOYSTICK_IOKIT', 1)
+  cdata.set('SDL_JOYSTICK_MFI', 1)
+  cdata.set('SDL_HAPTIC_IOKIT', 1)
+  cdata.set('SDL_POWER_MACOSX', 1)
+  cdata.set('SDL_SENSOR_DUMMY', 1)
+
+  # Camera
+  cdata.set('SDL_CAMERA_DRIVER_COREMEDIA', 1)
+
+  # Framework flags
+  cdata.set('SDL_FRAMEWORK_COCOA', 1)
+  cdata.set('SDL_FRAMEWORK_CARBON', 1)
+  cdata.set('SDL_FRAMEWORK_FOUNDATION', 1)
+  cdata.set('SDL_FRAMEWORK_COREVIDEO', 1)
+
   sdl_deps += dependency(
     'appleframeworks',
     modules: [
-      'CoreFoundation',
+      'AudioToolbox',
+      'AVFoundation',
+      'Carbon',
       'Cocoa',
       'CoreAudio',
+      'CoreBluetooth',
+      'CoreFoundation',
       'CoreGraphics',
       'CoreHaptics',
-      'GameController',
+      'CoreMedia',
+      'CoreMotion',
+      'CoreVideo',
       'ForceFeedback',
-      'IOKit',
       'Foundation',
-      'QuartzCore',
+      'GameController',
+      'IOKit',
       'Metal',
+      'OpenGL',
+      'QuartzCore',
+      'UniformTypeIdentifiers',
     ],
   )
 else
