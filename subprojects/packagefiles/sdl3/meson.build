@@ -281,7 +281,7 @@ elif host_machine.system() == 'windows'
   sdl_deps += cc.find_library('imm32')
   sdl_deps += cc.find_library('setupapi')
   sdl_deps += cc.find_library('winmm')
-elif host_machine.subsystem() == 'macos'
+elif host_machine.system() == 'darwin'
   cdata.set('SDL_PLATFORM_APPLE', 1)
   cdata.set('SDL_THREAD_PTHREAD', 1)
   cdata.set('SDL_THREAD_PTHREAD_RECURSIVE_MUTEX', 1)
